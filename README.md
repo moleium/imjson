@@ -8,11 +8,16 @@
 - Load themes from files, strings, or JSON objects.
 - Load fonts from JSON objects.
 
+## Example
+
+This repository includes a single example file under `example/` directory.
+To build an example, you will need to have CMake and a C++ compiler installed on your system, then use the provided `CMakelists.txt`.
+
 ## Usage
 
-To use `imjson`, include the `imjson.h` and `imjson.cpp` files in your project
+To use `imjson`, include the `imjson.h` and `imjson.cpp` files in your project :D!
 
-Here's an example of how to load a theme from a file:
+Here's an example of how to load a theme:
 
 ```cpp
 #include "imjson.h"
