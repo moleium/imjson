@@ -1,0 +1,52 @@
+cmake_minimum_required(VERSION 3.9.0)
+project(imjson)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_library(imjsonlib)
+target_sources(imjsonlib PRIVATE
+    imjson.h
+    imjson.cpp
+)
+target_include_directories(imjsonlib PUBLIC ${CMAKE_SOURCE_DIR})
+
+target_include_directories(imjsonlib PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
+)
+
+# imgui
+add_library(imgui STATIC
+    dependencies/imgui/imconfig.h
+    dependencies/imgui/imgui.cpp
+    dependencies/imgui/imgui.h
+    dependencies/imgui/imgui_demo.cpp
+    dependencies/imgui/imgui_draw.cpp
+    dependencies/imgui/imgui_impl_glfw.cpp
+    dependencies/imgui/imgui_impl_glfw.h
+    dependencies/imgui/imgui_impl_opengl3.cpp
+    dependencies/imgui/imgui_impl_opengl3.h
+    dependencies/imgui/imgui_impl_opengl3_loader.h
+    dependencies/imgui/imgui_internal.h
+    dependencies/imgui/imgui_tables.cpp
+    dependencies/imgui/imgui_widgets.cpp
+    dependencies/imgui/imstb_rectpack.h
+    dependencies/imgui/imstb_textedit.h
+    dependencies/imgui/imstb_truetype.h
+)
+
+target_include_directories(imgui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW/include)
+
+# glfw library
+add_library(glfw STATIC IMPORTED)
+set_target_properties(glfw PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW/lib-vc2022/glfw3.lib)
+target_include_directories(glfw INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW/include)
+
+# imcmake
+add_executable(imjson 
+    ${CMAKE_SOURCE_DIR}/example/main.cpp
+    ${CMAKE_SOURCE_DIR}/imjson.cpp
+)
+
+target_include_directories(imjson PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
+target_link_libraries(imjson PRIVATE opengl32 imgui glfw)
