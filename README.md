@@ -38,4 +38,4 @@ int main() {
 
 ## License
 
-`imjson` is distributed under the MIT License.
+`imjson` is distributed under the [MIT](LICENSE.md) License.
