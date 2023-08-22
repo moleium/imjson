@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Configure CMake
-      run: cmake -G "NMake Makefiles" -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -B build -S .
+      run: cmake -G "Unix Makefiles" -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -B build -S .
 
     - name: Build
       run: cmake --build build --config Release
