@@ -15,7 +15,7 @@ To build an example, you will need to have CMake and a C++ compiler installed on
 
 ## Usage
 
-To use `imjson`, include the `imjson.h` and `imjson.cpp` files in your project :D!
+To use `imjson`, include the `imjson.h` and `imjson.cpp`  alongside nlohmann's JSON library header inside `/dependencies` in your project :D!
 
 Here's an example of how to load a theme:
 
