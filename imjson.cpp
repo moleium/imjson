@@ -1,3 +1,14 @@
+//===-- imjson/imjson.cpp - imjson library implementation ------*- C++ -*-===//
+//
+// Part of the imjson project
+//
+//===----------------------------------------------------------------------===//
+//
+// This file contains the implementation of the imjson library, which allows
+// theme definition for imgui through JSON files.
+//
+//===----------------------------------------------------------------------===//
+
 #include "imjson.h"
 
 #include <fstream>
