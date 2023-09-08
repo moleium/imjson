@@ -27,12 +27,12 @@ int main() {
 
     // or from a string
     imjson::load_theme_from_string(R"(
-		{
-			"Colors": {
-				"Text": [1.0, 0.0, 0.0, 1.0]
-			}
-		}
-	)");
+    {
+        "Colors": {
+	    "Text": [1.0, 0.0, 0.0, 1.0]
+	}
+    }
+    )");
 }
 ```
 
