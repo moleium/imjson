@@ -21,11 +21,6 @@
 
 #include <nlohmann/json.hpp>
 
-// error handling macros
-#define IMJSON_ASSERT(cond, msg) do { if (!(cond)) { std::cerr << "imjson error: " << msg << std::endl; } } while (0)
-#define IMJSON_TRY try {
-#define IMJSON_CATCH(msg) } catch (...) { IMJSON_ASSERT(false, msg); }
-
 namespace imjson {
 	using json = nlohmann::json;
 
