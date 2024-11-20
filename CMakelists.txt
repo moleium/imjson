@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.9.0)
 project(imjson)
 
 add_library(imjsonlib STATIC
-    imjson.h
-    imjson.cpp
+    include/imjson.h
+    include/imjson.cpp
 )
 target_include_directories(imjsonlib 
-    PUBLIC ${CMAKE_SOURCE_DIR}
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
 )
 
@@ -25,7 +25,7 @@ target_include_directories(glfw INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/dependenci
 
 add_executable(imjson 
     example/main.cpp
-    imjson.cpp
+    include/imjson.cpp
 )
 target_include_directories(imjson PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 target_link_libraries(imjson PRIVATE imjsonlib imgui glfw opengl32)
