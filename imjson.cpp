@@ -5,16 +5,32 @@
 
 namespace imjson {
 
+static int pushed_colors = 0;
+static int pushed_vars = 0;
+
 void set_style_colors(const json &j) {
+  pushed_colors = 0; // Reset counter
   try {
     for (auto it = j.begin(); it != j.end(); ++it) {
       const std::string &name = it.key();
       const json &color = it.value();
-      if (color.is_array() && color.size() == 4) {
+      if (color.is_array()) {
+        if (color.size() != 4) {
+          std::cerr << "Warning: Color '" << name
+                    << "' must have exactly 4 components" << std::endl;
+          continue;
+        }
+        if (!std::all_of(color.begin(), color.end(),
+                         [](const json &v) { return v.is_number(); })) {
+          std::cerr << "Warning: Color '" << name
+                    << "' contains non-numeric values" << std::endl;
+          continue;
+        }
         ImVec4 col(color[0], color[1], color[2], color[3]);
         auto color_it = color_map.find(name);
         if (color_it != color_map.end()) {
           ImGui::PushStyleColor(color_it->second, col);
+          pushed_colors++;
         }
       }
     }
@@ -24,13 +40,20 @@ void set_style_colors(const json &j) {
 }
 
 void set_style_vars(const json &j) {
+  pushed_vars = 0; // Reset counter
   try {
     for (auto it = j.begin(); it != j.end(); ++it) {
       const std::string &name = it.key();
       const json &value = it.value();
       auto style_it = style_map.find(name);
       if (style_it != style_map.end()) {
-        ImGui::PushStyleVar(style_it->second, value);
+        if (value.is_number()) {
+          ImGui::PushStyleVar(style_it->second, value.get<float>());
+          pushed_vars++;
+        } else if (value.is_array() && value.size() == 2) {
+          ImGui::PushStyleVar(style_it->second, ImVec2(value[0], value[1]));
+          pushed_vars++;
+        }
       }
     }
   } catch (const std::exception &e) {
@@ -98,12 +121,28 @@ void load_theme_from_json(const json &j) {
         load_fonts(value);
       } else if (name == "Rounding" && value.is_object()) {
         set_style_vars(value);
-      } else if (style_map.find(name) != style_map.end() && value.is_array()) {
-        ImGui::PushStyleVar(style_map.at(name), ImVec2(value[0], value[1]));
+      } else if (style_map.find(name) != style_map.end()) {
+        json style_values = json::object();
+        style_values[name] = value;
+        set_style_vars(style_values);
       }
     }
   } catch (const std::exception &e) {
     std::cerr << "Error loading theme from json: " << e.what() << std::endl;
+  }
+}
+
+void pop_style_colors() {
+  if (pushed_colors > 0) {
+    ImGui::PopStyleColor(pushed_colors);
+    pushed_colors = 0;
+  }
+}
+
+void pop_style_vars() {
+  if (pushed_vars > 0) {
+    ImGui::PopStyleVar(pushed_vars);
+    pushed_vars = 0;
   }
 }
 } // namespace imjson

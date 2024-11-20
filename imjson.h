@@ -33,4 +33,14 @@ void load_theme_from_string(const std::string &json_str);
  * @param j The JSON object containing the theme information.
  */
 void load_theme_from_json(const json &j);
+
+/**
+ * @brief Pop all previously pushed colors
+ */
+void pop_style_colors();
+
+/**
+ * @brief Pop all previously pushed style variables
+ */
+void pop_style_vars();
 }
