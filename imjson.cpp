@@ -79,13 +79,13 @@ void load_fonts(const json &j) {
   }
 }
 
-void load_theme_from_file(const std::string &filename) {
+void load_file(const std::string &filename) {
   try {
     std::ifstream file(filename);
     if (file.is_open()) {
       json j;
       file >> j;
-      load_theme_from_json(j);
+      load(j);
     }
   } catch (const nlohmann::detail::parse_error &e) {
     std::cerr << "Error loading theme from file: " << e.what() << '\n';
@@ -96,10 +96,10 @@ void load_theme_from_file(const std::string &filename) {
   }
 }
 
-void load_theme_from_string(const std::string &json_str) {
+void load_string(const std::string &json_str) {
   try {
     json j = json::parse(json_str);
-    load_theme_from_json(j);
+    load(j);
   } catch (const nlohmann::detail::parse_error &e) {
     // output exception information
     std::cerr << "Error loading theme from string: " << e.what() << '\n';
@@ -110,7 +110,7 @@ void load_theme_from_string(const std::string &json_str) {
   }
 }
 
-void load_theme_from_json(const json &j) {
+void load(const json &j) {
   try {
     for (auto it = j.begin(); it != j.end(); ++it) {
       const std::string &name = it.key();
@@ -132,14 +132,14 @@ void load_theme_from_json(const json &j) {
   }
 }
 
-void pop_style_colors() {
+void pop_colors() {
   if (pushed_colors > 0) {
     ImGui::PopStyleColor(pushed_colors);
     pushed_colors = 0;
   }
 }
 
-void pop_style_vars() {
+void pop_vars() {
   if (pushed_vars > 0) {
     ImGui::PopStyleVar(pushed_vars);
     pushed_vars = 0;

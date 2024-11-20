@@ -14,33 +14,26 @@
 namespace imjson {
 /**
  * @brief Load theme from a file.
- *
- * @param filename The name of the file containing the theme information in JSON
- * format.
  */
-void load_theme_from_file(const std::string &filename);
+void load_file(const std::string &filename);
 
 /**
  * @brief Load theme from a string.
- *
- * @param json_str The string containing the theme information in JSON format.
  */
-void load_theme_from_string(const std::string &json_str);
+void load_string(const std::string &json_str);
 
 /**
  * @brief Load theme from a JSON object.
- *
- * @param j The JSON object containing the theme information.
  */
-void load_theme_from_json(const json &j);
+void load(const json &j);
 
 /**
  * @brief Pop all previously pushed colors
  */
-void pop_style_colors();
+void pop_colors();
 
 /**
  * @brief Pop all previously pushed style variables
  */
-void pop_style_vars();
+void pop_vars();
 }

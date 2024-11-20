@@ -81,7 +81,7 @@ int main() {
     "GrabMinSize": 10.0
   })";
 
-  imjson::load_theme_from_string(theme_json);
+  imjson::load_string(theme_json);
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -125,8 +125,8 @@ int main() {
     glfwSwapBuffers(window);
   }
 
-  imjson::pop_style_colors();
-  imjson::pop_style_vars();
+  imjson::pop_colors();
+  imjson::pop_vars();
 
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
