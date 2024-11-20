@@ -4,38 +4,67 @@
 
 ## Features
 
-- Define ImGui style colors and variables using JSON objects.
-- Load themes from files, strings, or JSON objects.
-- Load fonts from JSON objects.
+- Define ImGui style colors and variables using JSON objects
+- Load themes from files, strings, or JSON objects
+- Load fonts from JSON objects
+- Proper style stack management
 
-## Example
+## Dependencies
 
-This repository includes a single example file under `example/` directory.
-To build an example, you will need to have CMake and a C++ compiler installed on your system, then use the provided `CMakelists.txt`.
+- [Dear ImGui](https://github.com/ocornut/imgui)
+- [nlohmann/json](https://github.com/nlohmann/json)
 
 ## Usage
 
-To use `imjson`, include the `imjson.h` and `imjson.cpp`  alongside nlohmann's JSON library header inside `/dependencies` in your project :D!
-
-Here's an example of how to load a theme:
+Include `imjson.h` and `imjson.cpp` in your project:
 
 ```cpp
 #include "imjson.h"
 
 int main() {
-    imjson::load_theme_from_file("my_theme.json");
+  imjson::load_file("my_theme.json");  
 
-    // or from a string
-    imjson::load_theme_from_string(R"(
-    {
-        "Colors": {
-	    "Text": [1.0, 0.0, 0.0, 1.0]
-	}
-    }
-    )");
+  // Or from a string
+  imjson::load_string(R"(
+  {
+    "Colors": {
+      "Text": [1.0, 0.0, 0.0, 1.0]
+    },
+    "Rounding": {
+      "WindowRounding": 8.0,
+      "FrameRounding": 4.0
+    },
+    "WindowPadding": [8, 8]
+  }
+  )");  
+  
+  imjson::pop_colors();
+  imjson::pop_vars();
 }
 ```
 
-## License
+## Example
 
-`imjson` is distributed under the [MIT](LICENSE.md) License.
+A complete example is provided in the `example/` directory. To build it:
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+
+## Theme Format
+
+```json
+{
+  "Colors": {
+    "Text": [0.9, 0.9, 0.9, 1.0],
+    "WindowBg": [0.1, 0.1, 0.1, 1.0]
+  },
+  "Rounding": {
+    "WindowRounding": 4.0,
+    "FrameRounding": 2.0
+  },
+  "WindowPadding": [8, 8]
+}
+```
